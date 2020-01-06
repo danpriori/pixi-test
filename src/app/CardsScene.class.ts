@@ -53,14 +53,13 @@ export class CardsScene extends Scene {
         
         this.cardsContainer = new PIXI.Container();
         this.addChild(this.cardsContainer);
-        this.cardsContainer.position.x = this.sceneManager.width * 0.5 - 200;
-        this.cardsContainer.position.y = this.sceneManager.width * 0.5 - 200;
+        
         for (let i = 0; i < this.cardsAmount; i++) {
             this.card = new PIXI.Sprite(this.sceneManager.loader.resources.card.texture);
             this.card.anchor.x = 0.5;
             this.card.anchor.y = 0.5;
-            this.card.scale.x = 0.15;
-            this.card.scale.y = 0.15;
+            this.card.scale.x = 0.5;
+            this.card.scale.y = 0.5;
             this.card.position.x = this.sceneManager.width * 0.5 + (i * 1.3);
             this.card.position.y = this.sceneManager.height * 0.5 + (i * 1.3) - 200;
             this.card.name = "card";
@@ -69,8 +68,11 @@ export class CardsScene extends Scene {
             this.cardsContainer.addChild(this.card);
 
         }
+        this.cardsContainer.calculateBounds();
+        this.cardsContainer.position.x = + 50;
+        this.cardsContainer.position.y = + 100;
     }
-    public rescale(ratio:number): void {
+    public rescale(ratio: number): void {
         this.cardsContainer.scale.x = ratio;
         this.cardsContainer.scale.y = ratio;
         this.buttonMenu.position.x = this.sceneManager.width - 200;
