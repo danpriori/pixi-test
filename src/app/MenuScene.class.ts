@@ -19,17 +19,14 @@ export class MenuScene extends Scene {
 
         this.buttonCards = new PIXI.Sprite(this.sceneManager.loader.resources.buttonCards.texture);
 
-        this.buttonCards.scale.x = this.sceneManager.width / 400;
-        this.buttonCards.scale.y = this.buttonCards.scale.x;
-
-        this.buttonCards.width = this.sceneManager.width * 0.3;
-        this.buttonCards.height = this.buttonCards.height * this.buttonCards.scale.y * 0.3;
+        this.buttonCards.scale.x = 0.7;
+        this.buttonCards.scale.y = 0.7;
 
         this.buttonCards.anchor.x = 0.5;
         this.buttonCards.anchor.y = 0.5;
 
         this.buttonCards.position.x = this.sceneManager.width * 0.5;
-        this.buttonCards.position.y = this.sceneManager.height * 0.5 - 200;
+        this.buttonCards.position.y = this.sceneManager.height * 0.5 - 100;
 
         this.buttonCards.interactive  = true;
 
@@ -37,35 +34,29 @@ export class MenuScene extends Scene {
 
         this.buttonTexts = new PIXI.Sprite(this.sceneManager.loader.resources.buttonTexts.texture);
 
-        this.buttonTexts.scale.x = this.sceneManager.width / 400;
-        this.buttonTexts.scale.y = this.buttonTexts.scale.x;
+        this.buttonTexts.scale.x = 0.7;
+        this.buttonTexts.scale.y = 0.7;
 
         this.buttonTexts.anchor.x = 0.5;
         this.buttonTexts.anchor.y = 0.5;
 
         this.buttonTexts.position.x = this.sceneManager.width * 0.5;
-        this.buttonTexts.position.y = this.sceneManager.height * 0.5 - 100;
+        this.buttonTexts.position.y = this.sceneManager.height * 0.5;
         
-        this.buttonTexts.width = this.sceneManager.width * 0.3;
-        this.buttonTexts.height = this.buttonTexts.height * this.buttonTexts.scale.y * 0.3;
-
         this.buttonTexts.interactive  = true;
 
         this.buttonTexts.buttonMode  = true;
 
         this.buttonParticles = new PIXI.Sprite(this.sceneManager.loader.resources.buttonParticles.texture);
 
-        this.buttonParticles.scale.x = this.sceneManager.width / 400;
-        this.buttonParticles.scale.y = this.buttonParticles.scale.x;
+        this.buttonParticles.scale.x = 0.7;
+        this.buttonParticles.scale.y = 0.7;
 
         this.buttonParticles.anchor.x = 0.5;
         this.buttonParticles.anchor.y = 0.5;
 
         this.buttonParticles.position.x = this.sceneManager.width * 0.5;
-        this.buttonParticles.position.y = this.sceneManager.height * 0.5;
-
-        this.buttonParticles.width = this.sceneManager.width * 0.3;
-        this.buttonParticles.height = this.buttonParticles.height * this.buttonParticles.scale.y * 0.3;
+        this.buttonParticles.position.y = this.sceneManager.height * 0.5 + 100;
 
         this.buttonParticles.interactive  = true;
 

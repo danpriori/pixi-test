@@ -25,7 +25,7 @@ export class ScenesManager {
         
         window.addEventListener("resize", () => { this.rescale(); }, false);
         
-        let stats = new Stats();
+        const stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild( stats.dom );
 
