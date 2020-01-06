@@ -3,15 +3,14 @@ import { Scene } from "./sceneManager/Scene.class";
 import { ScenesManager } from "./sceneManager/ScenesManager.class";
     // Class
 export class TextsScene extends Scene {
-    private buttonMenu: PIXI.Sprite;
-    private sceneManager: ScenesManager;
     public container: PIXI.Container;
     public slot1: PIXI.Container;
     public slot2: PIXI.Container;
     public slot3: PIXI.Container;
-    public iconsPool: Array<PIXI.Sprite>;
     public textPool: Array<string>;
     public slots: Array<PIXI.Container>;
+    private buttonMenu: PIXI.Sprite;
+    private sceneManager: ScenesManager;
     private intervalElapsed: number = 0;
     private intervalStartTime: number = 0;
     private intervalDuration: number = 2000;
@@ -38,6 +37,8 @@ export class TextsScene extends Scene {
         this.addChild(this.container);
         this.container.position.x = this.sceneManager.width * 0.15;
         this.container.position.y = this.sceneManager.height * 0.2;
+        this.container.scale.x = 0.7;
+        this.container.scale.y = 0.7;
 
         this.slots = new Array<PIXI.Container>(3);
         this.slots[0] = new PIXI.Container();
@@ -47,23 +48,20 @@ export class TextsScene extends Scene {
         this.slots[2] = new PIXI.Container();
         this.container.addChild(this.slots[2]);
 
-        this.slots[0].position.x = this.container.position.x;
         this.slots[0].position.y = this.container.position.y - 50;
 
-        this.slots[1].position.x = this.container.position.x;
         this.slots[1].position.y = this.container.position.y;
 
-        this.slots[2].position.x = this.container.position.x;
         this.slots[2].position.y = this.container.position.y + 50;
 
         this.interactive = true;
 
         this.textPool = new Array<string>(5);
-        this.textPool[0] = 'Softgames - Amaze your fun time';
-        this.textPool[1] = 'Switching in 3...2...1...';
-        this.textPool[2] = 'Loading, or not?';
-        this.textPool[3] = 'Formatting your computer in 2 seconds';
-        this.textPool[4] = 'Softgames - let\'s play!';
+        this.textPool[0] = "Softgames - Amaze your fun time";
+        this.textPool[1] = "Switching in 3...2...1...";
+        this.textPool[2] = "Loading, or not?";
+        this.textPool[3] = "This is a text ;) ";
+        this.textPool[4] = "Softgames - let's play!";
 
     }
     public rescale(): void {
@@ -80,18 +78,16 @@ export class TextsScene extends Scene {
     }
     public getRandomText(): string {
         const index = Math.round(Math.random() * 5);
-        
         return this.textPool[index] || this.textPool[0];
     }
     public getRandomColor(): string {
-        return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
+        return "#" + ("00000" + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
     }
     public getRandomSize(): number {
         return Math.round(Math.random() * 10) + 20;
     }
     public update(td: number): void {
         super.update(td);
-        
         this.intervalElapsed = Date.now() - this.intervalStartTime;
         if (this.intervalElapsed >= this.intervalDuration) {
             this.slots[0].removeChildren();
@@ -103,16 +99,23 @@ export class TextsScene extends Scene {
                     const icon = new PIXI.Sprite(this.sceneManager.loader.resources.icon.texture);
                     icon.anchor.x = 0.5;
                     icon.anchor.y = 0.5;
-                    icon.position.x = this.slots[i].position.x;
+                    icon.position.x = this.sceneManager.width * 0.5;
                     icon.position.y = this.slots[i].position.y;
                     icon.rotation += Math.random();
                     this.slots[i].addChild(icon);
                 } else {
                     const fontText = this.getRandomText();
                     const fontColor = this.getRandomColor();
-                    const fontSize = this.getRandomSize();
-                    const text = new PIXI.Text(fontText,{fontFamily : 'Arial', fontSize: fontSize, fill : fontColor, align : 'center'});
-                    text.position.x = this.slots[i].position.x - 200;
+                    const fontSizes = this.getRandomSize();
+                    const text = new PIXI.Text(fontText, {
+                        align : "center",
+                        fill : fontColor,
+                        fontFamily : "Arial",
+                        fontSize: fontSizes
+                    });
+                    text.anchor.x = 0.5;
+                    text.anchor.y = 0.5;
+                    text.position.x = this.sceneManager.width * 0.5;
                     text.position.y = this.slots[i].position.y;
                     this.slots[i].addChild(text);
                 }
@@ -120,7 +123,6 @@ export class TextsScene extends Scene {
 
             this.intervalStartTime = Date.now();
         }
-
 
     }
 }

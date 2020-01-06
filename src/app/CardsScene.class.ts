@@ -1,28 +1,26 @@
 import * as PIXI from "pixi.js";
-import { easeInOutQuad } from 'js-easing-functions';
+import { easeInOutQuad } from "js-easing-functions";
 import { Scene } from "./sceneManager/Scene.class";
 import { ScenesManager } from "./sceneManager/ScenesManager.class";
     // Class
 export class CardsScene extends Scene {
+    public cardsContainer: PIXI.Container;
     private card: PIXI.Sprite;
     private buttonMenu: PIXI.Sprite;
     private sceneManager: ScenesManager;
-
     private elapsed: number;
     private startTime: number = 0;
-
-    private duration:number = 2000;
+    private duration: number = 2000;
     private startPosition: number = 0;
     private endPosition: number = -200;
     private currentCardIndex: number = 0;
-    private cardsAmount:number = 144;
+    private cardsAmount: number = 144;
     private currentCard: any;
     private animationStarted: boolean = false;
     private startCardMoving: boolean = false;
     private intervalElapsed: number = 0;
     private intervalStartTime: number = 0;
     private intervalDuration: number = 1000;
-    public cardsContainer: PIXI.Container;
 
     constructor(sceneManager: ScenesManager) {
         super();
@@ -50,10 +48,8 @@ export class CardsScene extends Scene {
         this.startMoving();
     }
     public createCards(): void {
-        
         this.cardsContainer = new PIXI.Container();
         this.addChild(this.cardsContainer);
-        
         for (let i = 0; i < this.cardsAmount; i++) {
             this.card = new PIXI.Sprite(this.sceneManager.loader.resources.card.texture);
             this.card.anchor.x = 0.5;
@@ -71,6 +67,11 @@ export class CardsScene extends Scene {
         this.cardsContainer.calculateBounds();
         this.cardsContainer.position.x = + 50;
         this.cardsContainer.position.y = + 100;
+
+        // @ts-ignore
+        this.cardsContainer.children.sort((itemA, itemB) => itemB.zIndex - itemA.zIndex);
+        // @ts-ignore
+        this.cardsContainer.sortDirty = false;
     }
     public rescale(ratio: number): void {
         this.cardsContainer.scale.x = ratio;
@@ -95,23 +96,29 @@ export class CardsScene extends Scene {
             this.startCardMoving = true;
             if (this.animationStarted && this.startCardMoving) {
                 if(this.startTime === 0) {
-                    this.currentCard = this.cardsContainer.children[this.currentCardIndex];
+                    this.currentCard = this.cardsContainer.children[
+                        this.cardsContainer.children.length - this.currentCardIndex - 1];
                     this.startPosition = this.currentCard.position.x;
                     this.startTime = Date.now();
                 }
                 this.elapsed = Date.now() - this.startTime;
-                
-                if(this.elapsed < this.duration && this.currentCard.name === "card") {
-                    this.currentCard.position.x = easeInOutQuad(this.elapsed, this.startPosition, this.endPosition, this.duration);
-                } else {
+                if (this.elapsed < this.duration && this.currentCard.name === "card") {
                     
-                    if (this.cardsContainer.children[this.currentCardIndex + 1] && this.cardsContainer.children[this.currentCardIndex + 1].name === "card") {
+                    this.currentCard.position.x = easeInOutQuad(
+                        this.elapsed,
+                        this.startPosition,
+                        this.endPosition,
+                        this.duration);
+                } else {
+                    if (this.cardsContainer.children[this.currentCardIndex + 1]
+                        && this.cardsContainer.children[this.currentCardIndex + 1].name === "card"
+                        ) {
                         this.currentCard.position.x = this.startPosition + this.endPosition;
-                        this.currentCard.zIndex = this.cardsAmount - this.currentCardIndex + 1;
+                        this.currentCard.zIndex = this.cardsAmount;
                         // @ts-ignore
-                        this.cardsContainer.children.sort((itemA, itemB) => itemA.zIndex - itemB.zIndex);
+                        this.cardsContainer.children.sort((itemA, itemB) => itemB.zIndex - itemA.zIndex);
                         this.resetStartTime();
-                        this.currentCard = this.cardsContainer.children[this.currentCardIndex];
+                        this.currentCard = this.cardsContainer.children[this.currentCard.zIndex - 1];
                         this.startPosition = this.currentCard.position.x;
 
                         this.startCardMoving = false;
@@ -131,6 +138,5 @@ export class CardsScene extends Scene {
 
     public startCounter(): void {
         this.currentCardIndex = 0;
-        
     }
 }
