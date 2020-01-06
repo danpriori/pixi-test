@@ -26,7 +26,6 @@
   "dependencies": {
     "@types/stats.js": "^0.17.0",
     "js-easing-functions": "^1.0.3",
-    "pixi-filters": "^3.0.3",
     "pixi-particles": "^4.2.0",
     "pixi.js": "^4.8.4",
     "stats.js": "^0.17.0"
