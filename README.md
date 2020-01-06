@@ -12,3 +12,7 @@ pixi test with simple scene manager, easing and particle system in TS
 ## Build
 
 * npm run build
+
+## Live demo
+
+https://codepen.io/danpriori/project/editor/DkBrKR
