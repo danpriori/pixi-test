@@ -11,4 +11,4 @@ pixi test with simple scene manager, easing and particle system in TS
 
 ## Build
 
-* npm build
+* npm run build
